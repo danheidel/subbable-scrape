@@ -1,0 +1,15 @@
+var cheerio = require('cheerio');
+var request = require('request');
+
+var url = 'http://subbable.com/creators';
+
+function 
+
+request(url, function(err, resp, body){
+	if(err) console.log("error: " + err);
+	console.log("resp: " + resp);
+	$ = cheerio.load(body);
+	$('.projects > li > a').each(function(){
+		console.log(this.attr());
+	});
+});
