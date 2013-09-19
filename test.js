@@ -55,6 +55,6 @@ function pageScrape(){
 };
 
 pageScrape();
-setInterval(pageScrape, (5 /*minutes*/ * 60 * 1000));
+setInterval(pageScrape, (15 /*minutes*/ * 60 * 1000));
 
 mariaConnection.end();
