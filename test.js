@@ -8,17 +8,16 @@ var url = 'http://subbable.com/creators';
 var dbClient = couchdb.createClient(443, 'danheidel.cloudant.com', 'danheidel', 'dpPG0mr2yuhDUFRqCALb', 0, 'true');
 var subbableDb = dbClient.db('subbable-scrape');
 
-
-console.log(myDate.getTime());
-
-dbClient.request({
-	path:'/crud/welcome',
-	method:'get',
-	},
-	function(err, data){
-		console.log('err: ' + err);
-		console.log(data);
+function mariaConHandler() {
+	var mariaConnection = mariadb.createConnection({
+		host:	"localhost",
+		user:	"root",
+		password:"Ih35MV9XqLcS",
+		database:"subbable",
 	});
+
+	mariaConnection.connect();
+}
 
 function projectScrape(urlList){
 	urlList.forEach(function(frag){
@@ -57,3 +56,5 @@ function pageScrape(){
 
 pageScrape();
 setInterval(pageScrape, (5 /*minutes*/ * 60 * 1000));
+
+mariaConnection.end();
