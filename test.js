@@ -1,21 +1,16 @@
+var common = require('/var/www/common/common');
 var cheerio = require('cheerio');
 var request = require('request');
-var couchdb = require('felix-couchdb');
 var mariadb = require('mysql');
 
 var myDate = new Date();
 var url = 'http://subbable.com/creators';
-var dbClient = couchdb.createClient(443, 'danheidel.cloudant.com', 'danheidel', 'dpPG0mr2yuhDUFRqCALb', 0, 'true');
-var subbableDb = dbClient.db('subbable-scrape');
 var mariaConnection;
+var dbVars = common.dbVars;
+dbVars.database = 'subbable';
 
 function mariaConHandler() {
-	mariaConnection = mariadb.createConnection({
-		host:	"localhost",
-		user:	"root",
-		password:"Ih35MV9XqLcS",
-		database:"subbable",
-	});
+	mariaConnection = mariadb.createConnection(dbVars);
 
 	mariaConnection.connect(function(err){
 		if(err){
@@ -51,7 +46,6 @@ function projectScrape(urlList){
 					datetime: myDate.toUTCString()
 					};
 				console.log(tempRecord);
-				subbableDb.saveDoc(tempRecord);
 				var tempMaria = {
 					name: tempRecord.name,
 					funding: tempRecord.funding.replace('%', ''),
