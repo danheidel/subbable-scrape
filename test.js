@@ -41,7 +41,7 @@ function projectScrape(urlList){
 				var tempRecord = {
 					name: frag.name,
 					funding: project$('span.monthly_funding_goal_percentage').text(),
-					subs: project$('span.number_of_subscribers').text(),
+					subs: parseInt(project$('span.number_of_subscribers').text().replace(',','')),
 					timestamp: Date.now(),
 					datetime: myDate.toUTCString()
 					};
